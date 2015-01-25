@@ -62,5 +62,18 @@ colnames(df_act_lab) <- c("activityId","activityLabel")
 # merge combined data with activity label data
 df_combined_all_label <- merge(df_ord,df_act_lab,by.x="activityId",by.y="activityId")
 
+# get into data table
 dt <- tbl_df(df_combined_all_label)
+
+# group by subject, activity
+dt1 <- group_by(dt,subjectId,activityLabel)
+
+# get average of all variables by subject, activity
+dt2 <- colMeans(dt1)
+
+dt3<- select(dt2,81,82,2:80)
+
+# Write dataset to file 
+write.table(dt3,"tidydata.txt",row.name=FALSE)
+
 
